@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+	<meta charset=utf-8>
+
+	<title>Head Visualizer</title>
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900' rel='stylesheet' type='text/css'>
+	<style>
+    html {
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    
+		body {
+			margin: 0;
+      font-family: "Source Sans Pro", Helvetica, sans-serif;
+      font-size: 0.9em;
+		}
+    
+    h1 {
+      font-size: 3em;
+      text-align: center;
+    }
+    
+    [draggable] {
+      user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        /* Required to make elements draggable in old WebKit */
+        -khtml-user-drag: element;
+        -webkit-user-drag: element;
+    }
+    
+    #app {
+      width: 100%;
+      background-color: #000;
+    }
+    
+    canvas {
+      cursor: move;
+      user-drag: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+    }
+    
+    main {
+      display: block;
+      padding: 0px 50px 50px;
+    }
+    
+    #HUD {
+      width: 100%;
+      margin: -20px 30px 30px;
+    }
+    
+    #nameOfLight {
+      display: block;
+      padding: 30px;
+      height: 0px;
+      margin: 0 auto;
+      position: relative;
+      bottom: 80px;
+      user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -khtml-user-drag: element;
+        -webkit-user-drag: element;
+      
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.75em;
+      text-align: center;
+    }
+    
+    #information {
+      margin: 20px;
+      float: left;
+      width: 63%;
+    }
+    
+    .information {
+      display: none;
+      background-color: #f7f7f7;
+      padding: 30px;
+      border-radius: 5px;
+    }
+    
+    blockquote {
+      font-style: italic;
+    }
+    
+    #credits {
+      float: right;
+      width: 30%;
+    }
+	</style>
+
+	<script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+
+</head>
+
+
+<body>
+
+	<h1># Head Visualizer</h1>
+
+	<script src="js/three.min.js"></script>
+	<script src="js/ColladaLoader.js"></script>
+
+	<script src="js/main.js"></script>
+  
+  <div id="app">
+  </div>
+  
+  <main>
+    
+    <div id="nameOfLight"></div>
+    
+    <table id="HUD">
+      <tr>
+        <td>
+          Model: <select id="modelChooser">
+            <option value="-1"><em>Model</em></option>
+            <option value="0">Lincoln</option>
+            <option value="1">Socrates</option>
+            <option value="2">Tissot</option>
+            <option value="3">Armand</option>
+            <option value="4">Sipiere</option>
+            <option value="5">Wailly</option>
+          </select>
+
+          <script>
+          $( "#modelChooser" ).change(function() {
+            setBust(parseInt(document.getElementById("modelChooser").value));
+          });
+          </script>
+        </td>
+
+        <td>
+          Lighting: <select id="lightingChooser">
+            <option value="-1"><em>Lighting</em></option>
+            <option value="0">Three-Quarter</option>
+            <option value="1">Frontal</option>
+            <option value="2">Edge / Rim</option>
+            <option value="3">Contre Jour</option>
+            <option value="4">From Below</option>
+            <option value="5">Spotlighting</option>
+            <option value="6">Multicolour</option>
+          </select>
+
+          <script>
+          $( "#lightingChooser" ).change(function() {
+            setLighting(parseInt(document.getElementById("lightingChooser").value));
+          });
+          </script>
+        </td>
+
+        <td class="right">
+          v. 0.2
+        </td>
+      </tr>
+      
+      <tr>
+        <td>
+          <form>
+            <input type="checkbox" onClick="cameraLocked = !cameraLocked" checked>
+            Lock Camera Y
+            <br>
+            <button type="button" onclick="camera.position.set(0, 0, 0); camera.lookAt(0, 0, -11);">
+            Reset Camera Y
+          </button>
+          </form>
+        </td>
+      </tr>
+    </table>
+    
+    <div id="information">
+      
+      <div class="information" id="Three-Quarter">
+        <blockquote>Most portraits are painted with light coming from about forty-five degrees in front of the model. The light reaches most of the visible form, leaving only a fraction of the form in shadow. The light is low enough to illuminate both eyes.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="Frontal">
+        <blockquote>The illuminated side of the face is modeled in close values, using variations of reds and greens more than tonal changes. . . . Frontal lighting emphasizes two-dimensional design instead of sculptural form. It's a good lighting to choose if you want to emphasize local color or pattern.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="EdgeRim">
+        <blockquote>The width of the rim light varies according to the size of the planes that face backward to the light. Edge light is not just a thin white line around the form. In the Abe Lincoln cast, the broadest plane and the widest part of the rim light is on the forehead.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="ContreJour">
+        <blockquote>Contre-jour lighting is a type of backlighting where a subject blocks the light, often standing against a bright sky or an illuminated doorway. The field of light takes on an active presence, almost surrounding or infusing the edges of the object.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="FromBelow">
+        <blockquote>Strong light doesn't usually come from below, so when you see it, it grabs your attention. We tend to associate underlighting with firelight or theatrical footlights, which can suggest a magical, sinister, or dramatic feeling.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="Spotlighting">
+        <blockquote>In theatrical illumination, the light is almost never completely uniform. Less important areas of the stage fall into shadow . . . a spotlight effect can be used on a small form, too, such as the face above. "Eyelights" were common in classic cinema to concentrate the viewer's attention on the eyes.</blockquote>
+        <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
+      </div>
+      
+      <div class="information" id="Multicolour">
+        <br>
+        <br>
+        <br>
+      </div>
+      
+    </div>
+
+    <div id="credits">
+      <h3>Credits</h3>
+      <p>
+        <a href="http://www.thingiverse.com/thing:326000" target="_blank">
+          Abraham Lincoln bust</a>
+          originally by
+        <a href="http://www.thingiverse.com/TheNewHobbyist/about" target="_blank">
+          Chris Krueger</a>.<br>
+
+        <a href="https://sketchfab.com/models/8e6613f59628417bbcb0e5b888b41162" target="_blank">
+          Bust of Socrates</a>
+        originally by
+        <a href="https://sketchfab.com/jane-heloise" target="_blank">
+          Jane Heloise</a>.<br>
+
+        <a href="https://sketchfab.com/models/fe18e8e79237433888b30654df688ae1" target="_blank">
+          Bust of Tissot</a>,
+        <a href="https://sketchfab.com/models/f1787a4de47f40679cb68070d1cbde37" target="_blank">
+          Countess Armand</a>,
+        and
+        <a href="https://sketchfab.com/models/5bcbd594ff5340d3a1f705fa16caa392" target="_blank">
+          Baronesse Sipiere model</a>
+        originally by
+        <a href="https://sketchfab.com/geoffreymarchal" target="_blank">
+          Geoffrey Marchal</a>.<br>
+
+        <a href="http://www.thingiverse.com/thing:279369" target="_blank">
+          Madame de Wailly model</a>
+        originally by Tom Freudenheim.<br>
+        
+        All models subsequently decimated in
+        <a href="http://www.blender.org/" target="_blank">Blender</a>.<br>
+      </p>
+      <p>
+        Made by <a href="http://jerryyin.me">Jerry Yin</a> with the <a href="http://threejs.org/" target="_blank">threejs</a> library.
+      </p>
+    </div>
+
+    <div style="padding-bottom: 100px; clear: both;">
+      
+    </div>
+  </main>
+
+</body>
+
+
+</html>
