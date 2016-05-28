@@ -4,30 +4,31 @@
 
 <head>
 
-	<meta charset=utf-8>
+  <meta charset=utf-8>
 
-	<title>Head Visualizer</title>
-  
+  <title>Head Visualizer</title>
+
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900' rel='stylesheet' type='text/css'>
-	<style>
+  <style>
     html {
       box-sizing: border-box;
     }
+
     *, *:before, *:after {
       box-sizing: inherit;
     }
-    
-		body {
-			margin: 0;
+
+    body {
+      margin: 0;
       font-family: "Source Sans Pro", Helvetica, sans-serif;
       font-size: 0.9em;
-		}
-    
+    }
+
     h1 {
       font-size: 3em;
       text-align: center;
     }
-    
+
     [draggable] {
       user-select: none;
         -moz-user-select: none;
@@ -37,12 +38,21 @@
         -khtml-user-drag: element;
         -webkit-user-drag: element;
     }
-    
+
     #app {
+      display: block;
       width: 100%;
+      max-height: 50vw;
       background-color: #000;
     }
-    
+
+    #threeapp {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
+    }
+
     canvas {
       cursor: move;
       user-drag: none;
@@ -51,17 +61,17 @@
         -moz-user-drag: none;
         -o-user-drag: none;
     }
-    
+
     main {
       display: block;
       padding: 0px 50px 50px;
     }
-    
+
     #HUD {
       width: 100%;
       margin: -20px 30px 30px;
     }
-    
+
     #nameOfLight {
       display: block;
       padding: 30px;
@@ -75,37 +85,37 @@
         -webkit-user-select: none;
         -khtml-user-drag: element;
         -webkit-user-drag: element;
-      
+
       color: #fff;
       font-weight: 900;
       font-size: 1.75em;
       text-align: center;
     }
-    
+
     #information {
       margin: 20px;
       float: left;
       width: 63%;
     }
-    
+
     .information {
       display: none;
       background-color: #f7f7f7;
       padding: 30px;
       border-radius: 5px;
     }
-    
+
     blockquote {
       font-style: italic;
     }
-    
+
     #credits {
       float: right;
       width: 30%;
     }
-	</style>
+  </style>
 
-	<script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery-ui.min.js"></script>
 
 </head>
@@ -113,20 +123,19 @@
 
 <body>
 
-	<h1># Head Visualizer</h1>
+  <h1>Head Visualizer</h1>
 
-	<script src="js/three.min.js"></script>
-	<script src="js/ColladaLoader.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/ColladaLoader.js"></script>
 
-	<script src="js/main.js"></script>
-  
-  <div id="app">
-  </div>
-  
+  <script src="js/main.js"></script>
+
+  <div id="app"></div>
+
   <main>
-    
+
     <div id="nameOfLight"></div>
-    
+
     <table id="HUD">
       <tr>
         <td>
@@ -167,10 +176,10 @@
         </td>
 
         <td class="right">
-          v. 0.2
+          v. 0.3
         </td>
       </tr>
-      
+
       <tr>
         <td>
           <form>
@@ -184,45 +193,45 @@
         </td>
       </tr>
     </table>
-    
+
     <div id="information">
-      
+
       <div class="information" id="Three-Quarter">
         <blockquote>Most portraits are painted with light coming from about forty-five degrees in front of the model. The light reaches most of the visible form, leaving only a fraction of the form in shadow. The light is low enough to illuminate both eyes.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="Frontal">
         <blockquote>The illuminated side of the face is modeled in close values, using variations of reds and greens more than tonal changes. . . . Frontal lighting emphasizes two-dimensional design instead of sculptural form. It's a good lighting to choose if you want to emphasize local color or pattern.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="EdgeRim">
         <blockquote>The width of the rim light varies according to the size of the planes that face backward to the light. Edge light is not just a thin white line around the form. In the Abe Lincoln cast, the broadest plane and the widest part of the rim light is on the forehead.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="ContreJour">
         <blockquote>Contre-jour lighting is a type of backlighting where a subject blocks the light, often standing against a bright sky or an illuminated doorway. The field of light takes on an active presence, almost surrounding or infusing the edges of the object.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="FromBelow">
         <blockquote>Strong light doesn't usually come from below, so when you see it, it grabs your attention. We tend to associate underlighting with firelight or theatrical footlights, which can suggest a magical, sinister, or dramatic feeling.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="Spotlighting">
         <blockquote>In theatrical illumination, the light is almost never completely uniform. Less important areas of the stage fall into shadow . . . a spotlight effect can be used on a small form, too, such as the face above. "Eyelights" were common in classic cinema to concentrate the viewer's attention on the eyes.</blockquote>
         <span class="author">&mdash; James Gurney, <em>Color and Light</em></span>
       </div>
-      
+
       <div class="information" id="Multicolour">
         <br>
         <br>
         <br>
       </div>
-      
+
     </div>
 
     <div id="credits">
@@ -254,7 +263,7 @@
         <a href="http://www.thingiverse.com/thing:279369" target="_blank">
           Madame de Wailly model</a>
         originally by Tom Freudenheim.<br>
-        
+
         All models subsequently decimated in
         <a href="http://www.blender.org/" target="_blank">Blender</a>.<br>
       </p>
@@ -264,7 +273,7 @@
     </div>
 
     <div style="padding-bottom: 100px; clear: both;">
-      
+
     </div>
   </main>
 

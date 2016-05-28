@@ -1,8 +1,9 @@
 /*global THREE */
 /*global console */
-/*jshint browser:true */
-/*jshint jquery:true */
+/*jshint browser: true */
+/*jshint jquery: true */
 /*jshint strict: false*/
+/*jshint -W104 */
 
 const NUM_OF_BUSTS = 6,
       NUM_OF_LIGHTINGS = 7;
@@ -39,7 +40,7 @@ hemisphereLight.name = "hemisphereLight";
 directionalLight.name = "directionalLight";
 scene.add(pointLight1, pointLight2, pointLight3, pointLight4,
           directionalLight, hemisphereLight);
-    
+
 
 /**
 * Loads a collada file.
@@ -47,17 +48,11 @@ scene.add(pointLight1, pointLight2, pointLight3, pointLight4,
 */
 function colladaLoad(name) {
   colladaLoader.load(name + ".dae", function(collada) {
-  //colladaLoader.load("Lincoln.dae", function(collada) {
-  //colladaLoader.load("Tissot.dae", function(collada) {
-  //colladaLoader.load("Socrates.dae", function(collada) {
-  //colladaLoader.load("Wailly.dae", function(collada) {
-  //colladaLoader.load("Sipiere.dae", function(collada) {
-    
     mesh = collada.scene;
     currentBust = name;
     mesh.color = "0x222222";
     mesh.name = name;
-    
+
     var box = new THREE.Box3().setFromObject( mesh ),
         maxDim = Math.max(box.size().x, box.size().y, box.size().z);
     console.log(maxDim);
@@ -78,17 +73,16 @@ function jsonLoad(name) {
     currentBust = name;
     mesh.color = "0x222222";
     mesh.name = name;
-    
+
     var box = new THREE.Box3().setFromObject( mesh ),
         maxDim = Math.max(box.size().x, box.size().y, box.size().z),
         scaleFactor = 10 / maxDim;
-//  console.log(mesh.children[0].children[0].geometry.computeBoundingBox());
 
     mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
     mesh.position.set(0, 0, -11);
     loadedBusts[getBustNumber(name)] = mesh;
     scene.add(mesh);
-    
+
     document.getElementById("nameOfLight").innerHTML = getLightName(currentLighting);
     console.log("Loaded " + name + ".json of max bound " + maxDim);
   }, function() {
@@ -116,19 +110,19 @@ const lightsUsed = [["pointLight1", "pointLight2", "hemisphereLight"],
 */
 function generateLighting(num) {
   var pointLHelper1, pointLHelper2, dirLightHelper;
-  if (num == 0) {
+  if (num === 0) {
     pointLight1.intensity = 0.8;
-    pointLight1.color.setHex(0xcccccc);//getRandomColour(0xcc, 0xf4, 0xcc, 0xf4, 0xcc, 0xf4)); // 0xf5dfcf
+    pointLight1.color.setHex(0xcccccc);
     pointLight1.position.set(3, 5, -5);
-    
+
     pointLight2.intensity = 0.2;
     pointLight2.color.setHex(0x648038);
     pointLight2.position.set(-3, -5, -5);
-    
+
     hemisphereLight.intensity = 0.2;
     hemisphereLight.color.setHex(0x3e1c09);
     hemisphereLight.groundColor.setHex(0xb92d12);
-    
+
 //    pointLight1.name = "pointLight1";
 //    hemisphereLight.name = "hemisphereLight";
 //    scene.add(pointLight1, hemisphereLight);
@@ -136,22 +130,22 @@ function generateLighting(num) {
     pointLight1.intensity = 0.8;
     pointLight1.color.setHex(getRandomColour(0xcc, 0xfa, 0xc5, 0xfa, 0xcc, 0xfa));
     pointLight1.position.set(0, 9, 0);
-    
+
     hemisphereLight.intensity = 0.5;
     hemisphereLight.color.setHex(0x3e1c09);
     hemisphereLight.groundColor.setHex(0x9b5649);
-    
+
 //    pointLight1.name = "pointLight1";
 //    scene.add(pointLight1);
   } else if (num == 2) {
     pointLight1.intensity = 6;
     pointLight1.color.setHex(0xffc682);
     pointLight1.position.set(14, 18, -23);
-    
+
     directionalLight.intensity = 0.5;
     directionalLight.color.setHex(0xddcccc);
     directionalLight.position.set(0, 10, 0);
-    
+
 //    pointLight1.name = "pointLight1";
 //    directionalLight.name = "directionalLight";
 //    scene.add(pointLight1, directionalLight);
@@ -159,26 +153,26 @@ function generateLighting(num) {
     hemisphereLight.intensity = 0.5;
     hemisphereLight.color.setHex(0x427a98);
     hemisphereLight.groundColor.setHex(0x24221f);
-    
+
     pointLight1.intensity = 1;
     pointLight1.color.setHex(0xff9327);
     pointLight1.position.set(8, 10, -25);
-    
+
     pointLight2.intensity = 1;
     pointLight2.color.setHex(0xff9327);
     pointLight2.position.set(-8, 10, -25);
-    
+
     pointLight3.intensity = 1;
     pointLight3.color.setHex(0xff9327);
     pointLight3.position.set(16, 10, -25);
-    
+
     pointLight4.intensity = 1;
     pointLight4.color.setHex(0xff9327);
     pointLight4.position.set(-16, 10, -25);
-    
+
 //    pointLHelper1 = new THREE.PointLightHelper(pointLight1, 10);
 //    pointLHelper2 = new THREE.PointLightHelper(pointLight2, 10);
-    
+
 //    hemisphereLight.name = "hemisphereLight";
 //    pointLight1.name = "pointLight1";
 //    pointLight2.name = "pointLight2";
@@ -190,15 +184,15 @@ function generateLighting(num) {
     pointLight1.intensity = 1.2;
     pointLight1.color.setHex(0xff6026);
     pointLight1.position.set(0, -10, -6);
-    
+
     pointLight2.intensity = 0.6;
     pointLight2.color.setHex(0x7c9aaa);
     pointLight2.position.set(11, -10, -8);
-    
+
     pointLight3.intensity = 0.6;
     pointLight3.color.setHex(0xc3a2d0);
     pointLight3.position.set(-11, -10, -8);
-    
+
 //    pointLight1.name = "pointLight1";
 //    pointLight2.name = "pointLight2";
 //    pointLight3.name = "pointLight3";
@@ -207,18 +201,18 @@ function generateLighting(num) {
     hemisphereLight.intensity = 0.5;
     hemisphereLight.color.setHex(0x427a98);
     hemisphereLight.groundColor.setHex(0x24221f);
-    
+
     pointLight1.intensity = 3;
     pointLight1.distance = 4.4;
     pointLight1.color.set(0xf2d24b);
     pointLight1.position.set(1.8, 2.5, -6);
-    //pointLHelper1 = new THREE.PointLightHelper(pointLight1, 2);
-    
+//    pointLHelper1 = new THREE.PointLightHelper(pointLight1, 2);
+
     directionalLight.intensity = 0.5;
     directionalLight.color.setHex(0xf2d24b);
     directionalLight.position.set(4, 20, -5);
-    //dirLightHelper = new THREE.DirectionalLightHelper(directionalLight, 20);
-    
+//    dirLightHelper = new THREE.DirectionalLightHelper(directionalLight, 20);
+
 //    pointLight1.name = "pointLight1";
 //    directionalLight.name = "directionalLight";
 //    hemisphereLight.name = "hemisphereLight";
@@ -227,15 +221,15 @@ function generateLighting(num) {
     pointLight1.intensity = 0.6;
     pointLight1.color.setHex(0xff0000);
     pointLight1.position.set(5, 10, -4);
-    
+
     pointLight2.intensity = 0.6;
     pointLight2.color.setHex(0x00ff00);
     pointLight2.position.set(-7, 10, -9);
-    
+
     pointLight3.intensity = 0.6;
     pointLight3.color.setHex(0x0000ff);
     pointLight3.position.set(-0.3, -2, -4);
-    
+
 //    pointLight1.name = "pointLight1";
 //    pointLight2.name = "pointLight2";
 //    pointLight3.name = "pointLight3";
@@ -244,7 +238,7 @@ function generateLighting(num) {
   console.log("Objects in scene: ");
   console.log(scene.children);
 }
-  
+
 /**
 * Returns random hexadecimal-colour-appropriate number.
 * @param {Number} rL Lower bound for amount of red, as Integer[0x0, 0xff]
@@ -315,9 +309,9 @@ function getBustNumber(name) {
 function setBust(num) {
   if (typeof num === "string")
     num = getBustNumber(num);
-  
+
   if (num == -1 || currentBust === getBustName(num)) return;
-  
+
   scene.remove(loadedBusts[getBustNumber(currentBust)]);
   if (num < NUM_OF_BUSTS) {
     if (loadedBusts[num] === undefined) {
@@ -350,7 +344,7 @@ function getRandomLighting() {
 */
 function getLightName(num, suffix) {
   suffix = (suffix !== undefined ? suffix : true);
-  if (currentLighting == 0) {
+  if (currentLighting === 0) {
     if (!suffix)
       return "Three-Quarter";
     else
@@ -391,7 +385,7 @@ function getDivId(num) {
 /** Sets the lighting. */
 function setLighting(num) {
   if (num == -1 || currentLighting == num) return;
-  
+
   if (currentLighting !== undefined) {
     var i, arr = lightsUsed[currentLighting], length = arr.length;
     for (i = 0; i < length; i++) {
@@ -404,7 +398,7 @@ function setLighting(num) {
   if (num < NUM_OF_LIGHTINGS) {
     if (currentLighting !== undefined)
       $(getDivId(currentLighting)).slideUp(200);
-    
+
     if (mesh !== undefined) mesh.children[0].children[0].material.needsUpdate = true;
     generateLighting(num);
     currentLighting = num;
@@ -416,115 +410,95 @@ function setLighting(num) {
 }
 
 function render() {
-	requestAnimationFrame( render );
-  
-	if (mesh !== undefined) {
+  requestAnimationFrame( render );
+
+  if (mesh !== undefined) {
     if (!paused && !beingDragged)
       mesh.rotation.z += 0.005;
     tElapsed = new Date().getTime() - startTime;
     mesh.position.y = 1 - Math.sin(tElapsed/1000) / 3;
-	}
-	renderer.render(scene, camera);
+  }
+  renderer.render(scene, camera);
 }
 
 function init() {
+  /** HTML element init */
   renderer.setSize( $(window).innerWidth(), 0.5 * $(window).innerWidth(), false );
   renderer.domElement.setAttribute("id", "threeapp");
   document.getElementById("app").appendChild( renderer.domElement );
   canvas = renderer.domElement;
   $("#app").css("height", ~~(0.5 * $(window).innerWidth()));
-  
-  /*
-  canvas.addEventListener("mousedown", function(event) {
+
+  /**
+  * Dragging controls
+  * Source: http://stackoverflow.com/a/10502101
+  */
+  $.widget('ui.custommouse', $.ui.mouse, {
+    options: {
+      delay: 100,
+      distance: 2,
+      mouseStart: function(e) {},
+      mouseDrag: function(e) {},
+      mouseStop: function(e) {},
+      mouseCapture: function(e) { return true; }
+    },
+    // Forward events to custom handlers
+    _mouseStart: function(e) { return this.options.mouseStart(e); },
+    _mouseDrag: function(e) { return this.options.mouseDrag(e); },
+    _mouseStop: function(e) { return this.options.mouseStop(e); },
+    _mouseCapture: function(e) { return this.options.mouseCapture(e); },
+    // Bookkeeping, inspired by Draggable
+    widgetEventPrefix: 'custommouse',
+    _init: function() {
+      return this._mouseInit();
+    },
+    _create: function() {
+      return this.element.addClass('ui-custommouse');
+    },
+    _destroy: function() {
+      this._mouseDestroy();
+      return this.element.removeClass('ui-custommouse');
+    },
+  });
+  function mouseStart(event, ui) {
+    // console.log("Drag initialized.");
     dragStartX = event.pageX;
     dragStartY = event.pageY;
     savedRotationZ = mesh.rotation.z;
     savedCameraPosition = camera.position.y;
-    mouseDown = true;
-  });
-  
-  canvas.addEventListener("mousemove", function(event) {
-    if (mouseDown) {
-      console.log("Dragging! Firing events.");
-      var xDifference = event.pageX - dragStartX;
-      var yDifference = event.pageY - dragStartY;
-      if (!beingDragged &&
-          (Math.abs(xDifference) > 2 || (!cameraLocked && Math.abs(yDifference) > 2)))
-        beingDragged = true;
-      if (!cameraLocked) {
-        camera.position.y = Math.max(-10, Math.min(savedCameraPosition + yDifference / 20, 10));
-        camera.position.z = Math.sqrt(121 - Math.pow(camera.position.y, 2)) - 11;
-        camera.lookAt(new THREE.Vector3(0, 0, -11));
-      }
-      mesh.rotation.z = savedRotationZ + xDifference / 200;
+  }
+  function mouseDrag(event, ui) {
+    // console.log("Dragging! Firing events.");
+    var xDifference = event.pageX - dragStartX;
+    var yDifference = event.pageY - dragStartY;
+    if (!beingDragged)
+      beingDragged = true;
+    if (!cameraLocked) {
+      camera.position.y = Math.max(-10, Math.min(savedCameraPosition + yDifference / 20, 10));
+      camera.position.z = Math.sqrt(121 - Math.pow(camera.position.y, 2)) - 11;
+      camera.lookAt(new THREE.Vector3(0, 0, -11));
     }
-  });
-  
-  canvas.addEventListener("mouseup", function() {
+    mesh.rotation.z = savedRotationZ + xDifference / 200;
+  }
+  function mouseStop(event, ui) {
+    // console.log("Drag ended.");
+    beingDragged = false;
+  }
+
+  $('#app').custommouse({
+    mouseStart: mouseStart,
+    mouseDrag: mouseDrag,
+    mouseStop: mouseStop
+  }).click(function() {
     if (!beingDragged)
       paused = !paused;
-    else
-      console.log("Drag ended.");
-    beingDragged = false;
-    mouseDown = false;
   });
-  
-  canvas.addEventListener("mouseleave", function() {
-    beingDragged = false;
-    mouseDown = false;
-  }); //*/
-  
-  ///*  
-  $("#threeapp").draggable({
-    containment: "parent",
-    delay: 100,
-    distance: 2,
-    start: function(event, ui) {
-      console.log("Drag initialized.");
-      dragStartX = event.pageX;
-      dragStartY = event.pageY;
-      savedRotationZ = mesh.rotation.z;
-      savedCameraPosition = camera.position.y;
-    },
-    drag: function(event, ui) {
-      console.log("Dragging! Firing events.");
-      var xDifference = event.pageX - dragStartX;
-      var yDifference = event.pageY - dragStartY;
-      if (!beingDragged)
-        beingDragged = true;
-      if (!cameraLocked) {
-        camera.position.y = Math.max(-10, Math.min(savedCameraPosition + yDifference / 20, 10));
-        camera.position.z = Math.sqrt(121 - Math.pow(camera.position.y, 2)) - 11;
-        camera.lookAt(new THREE.Vector3(0, 0, -11));
-      }
-      mesh.rotation.z = savedRotationZ + xDifference / 200;
-    },
-    stop: function(event, ui) {
-      console.log("Drag ended.");
-      beingDragged = false;
-    }
-  }).click(function() {
-    if (!($(this).is('.ui-draggable-dragging')) && !beingDragged)
-      paused = !paused;
-  });
-  //*/
-  
+
+  /** Setup Init */
   setBust(getRandomBust());
   setLighting(getRandomLighting());
   camera.position.set(0, 0, 0);
 
   render();
-  
-  /*
-  var geometry = new THREE.BoxGeometry( 5, 1, 5 );
-  var material = new THREE.MeshLambertMaterial( { color: 0x457272 } );
-  var cube = new THREE.Mesh( geometry, material );
-  cube.position.set(0, 2, 0);
-  scene.add( cube );
-  
-  var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
-  var skyboxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
-  var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-  scene.add(skybox); //*/
 }
 $(document).ready(init);
